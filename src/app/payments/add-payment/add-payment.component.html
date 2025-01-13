@@ -1,0 +1,153 @@
+<div class="add-payment-container">
+    <h2>Add Payment</h2>
+
+     <!-- Message about required fields -->
+  <div class="required-fields-message">
+    <p>
+      <span class="asterisk">*</span> Fields marked with an asterisk are required
+    </p>
+  </div>
+    <form (ngSubmit)="onSubmit()" #addPaymentForm="ngForm">
+  
+      <!-- Payee Information -->
+      <mat-form-field>
+        <input matInput placeholder="First Name" [(ngModel)]="payment.payee_first_name" name="payee_first_name" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_first_name">First Name is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Last Name" [(ngModel)]="payment.payee_last_name" name="payee_last_name" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_last_name">Last Name is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input 
+          matInput 
+          type="email" 
+          [(ngModel)]="payment.payee_email" 
+          name="payee_email" 
+          placeholder="Enter Email" 
+          required 
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_email">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="addPaymentForm.controls['payee_email']?.errors?.['pattern']">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+      
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="payment.payee_phone_number"
+          name="payee_phone_number"
+          placeholder="Enter Phone Number"
+          required
+          pattern="^[0-9]{10}$"
+          maxlength="10"
+          (input)="validatePhoneNumber($event)">
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_phone_number">
+          Phone number is required
+        </mat-error>
+        <mat-error *ngIf="addPaymentForm.controls['payee_phone_number']?.errors?.['pattern']">
+          Phone number must be exactly 10 digits
+        </mat-error>
+      </mat-form-field>
+      
+  
+      <!-- Address Fields -->
+      <mat-form-field>
+        <input matInput placeholder="Address Line 1" [(ngModel)]="payment.payee_address_line_1" name="payee_address_line_1" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_address_line_1">Address Line 1 is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="City" [(ngModel)]="payment.payee_city" name="payee_city" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_city">City is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="State/Province" [(ngModel)]="payment.payee_province_or_state" name="payee_province_or_state" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_province_or_state">State/Province is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Country" [(ngModel)]="payment.payee_country" name="payee_country" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_country">Country is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Postal Code" [(ngModel)]="payment.payee_postal_code" name="payee_postal_code" required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_postal_code">Postal Code is required</mat-error>
+      </mat-form-field>
+
+      <!-- Status Field -->
+    <mat-form-field>
+        <input matInput placeholder="Status" [(ngModel)]="payment.payee_payment_status" name="payee_payment_status" readonly
+          (mouseover)="showStatusWarning()" value="pending">
+        <mat-hint>Status is set to 'Pending' by default</mat-hint>
+      </mat-form-field>
+  
+      <!-- Payment Details -->
+      <mat-form-field appearance="outline">
+        <mat-label>Due Amount</mat-label>
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="payment.due_amount" 
+          name="due_amount" 
+          placeholder="Enter Due Amount" 
+          required>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.due_amount">Valid Due Amount is required</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Tax (%)</mat-label>
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="payment.tax_percent" 
+          name="tax_percent" 
+          placeholder="Enter Tax (%)">
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.tax_percent">Valid Tax value is required</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Discount (%)</mat-label>
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="payment.discount_percent" 
+          name="discount_percent" 
+          placeholder="Enter Discount (%)">
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.discount_percent">Valid Discount value is required</mat-error>
+      </mat-form-field>
+      
+      
+      <mat-form-field>
+        <mat-select placeholder="Currency" [(ngModel)]="payment.currency" name="currency" required>
+          <mat-option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.currency">Currency is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="dueDatePicker" [(ngModel)]="payment.payee_due_date" name="payee_due_date" required>
+        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dueDatePicker></mat-datepicker>
+        <mat-error *ngIf="addPaymentForm.submitted && !payment.payee_due_date">Due Date is required</mat-error>
+      </mat-form-field>
+      
+  
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+  
+    </form>
+  </div>
+  

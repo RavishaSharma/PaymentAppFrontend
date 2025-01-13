@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<nav mat-tab-nav-bar>
+    <a
+      mat-tab-link
+      routerLink="/payments"
+      routerLinkActive
+      #manageActive="routerLinkActive"
+      [active]="manageActive.isActive"
+    >
+      Manage Payments
+    </a>
+    <a
+      mat-tab-link
+      routerLink="/add-payment"
+      routerLinkActive
+      #addActive="routerLinkActive"
+      [active]="addActive.isActive"
+    >
+      Add Payment
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
+  

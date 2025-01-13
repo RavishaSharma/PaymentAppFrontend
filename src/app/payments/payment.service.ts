@@ -44,4 +44,9 @@ export class PaymentService {
   downloadEvidence(fileId: string): Observable<Blob> {
     return this.http.get(`${this.filesUrl}/download_evidence/${fileId}`, { responseType: 'blob' });
   }
+ // add a new payment
+ addPayment(payment: any): Observable<any> {
+  return this.http.post('http://127.0.0.1:5000/payments/create_payment', payment);
+}
+
 }
