@@ -17,6 +17,15 @@
     >
       Add Payment
     </a>
+    <a
+    mat-tab-link
+    routerLink="/edit-payment"
+    routerLinkActive
+    #addActive="routerLinkActive"
+    [active]="addActive.isActive"
+  >
+    Edit Payment
+  </a>
   </nav>
   <router-outlet></router-outlet>
   

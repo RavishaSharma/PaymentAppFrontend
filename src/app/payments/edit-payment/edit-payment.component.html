@@ -1,0 +1,83 @@
+<div style="margin-top: 20px;">
+    <!-- Edit Payment content goes here -->
+  </div>
+  
+<form [formGroup]="editPaymentForm" (ngSubmit)="onSubmit()" class="edit-payment-form">
+    <!-- User ID Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>User ID</mat-label>
+      <mat-select formControlName="userId" (selectionChange)="onUserIdChange($event)">
+        <mat-option *ngFor="let user of users" [value]="user">{{ user }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <!-- Currency Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Currency</mat-label>
+      <input matInput formControlName="currency" />
+    </mat-form-field>
+  
+    <!-- Due Date Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Due Date</mat-label>
+      <input matInput formControlName="dueDate" type="date" />
+    </mat-form-field>
+  
+    <!-- Due Amount Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Due Amount</mat-label>
+      <input matInput formControlName="dueAmount" type="number" />
+    </mat-form-field>
+  
+    <!-- Status Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" (selectionChange)="onStatusChange($event)">
+        <mat-option value="pending">Pending</mat-option>
+        <mat-option value="due_now">Due Now</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <!-- Message for adding evidence -->
+    <div *ngIf="requiresEvidence && !evidenceUploaded" class="evidence-message">
+      <mat-icon color="warn">warning</mat-icon>
+      <span>Please add evidence to complete payment.</span>
+    </div>
+  
+    <!-- Evidence Upload Section -->
+    <div *ngIf="requiresEvidence">
+      <!-- Choose File -->
+      <div class="file-upload-container">
+        <label for="file-upload" class="file-upload-label">Upload Evidence</label>
+        <input
+          id="file-upload"
+          type="file"
+          (change)="onFileSelected($event)"
+          class="file-upload-input"
+        />
+      </div>
+      
+  
+      <!-- Upload Evidence Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="uploadEvidence()"
+        [disabled]="!selectedFile"
+      >
+        Upload Evidence
+      </button>
+    </div>
+  
+    <!-- Save Changes Button -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!editPaymentForm.valid || (requiresEvidence && !evidenceUploaded)"
+    >
+      Save Changes
+    </button>
+  </form>
+  

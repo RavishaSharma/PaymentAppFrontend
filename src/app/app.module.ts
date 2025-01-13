@@ -20,6 +20,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EditPaymentComponent } from './payments/edit-payment/edit-payment.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon'; // Import MatIconModule
 
 
 
@@ -27,7 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
   declarations: [
     AppComponent,
     PaymentListComponent,
-    AddPaymentComponent
+    AddPaymentComponent,
+    EditPaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatTableModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

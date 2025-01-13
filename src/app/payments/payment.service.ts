@@ -48,5 +48,12 @@ export class PaymentService {
  addPayment(payment: any): Observable<any> {
   return this.http.post('http://127.0.0.1:5000/payments/create_payment', payment);
 }
+  // Fetch User IDs
+  getUsers(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/api/users`);
+  }
+  getPaymentById(userId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/get_payments`, { params: { _id: userId } });
+  }
 
 }

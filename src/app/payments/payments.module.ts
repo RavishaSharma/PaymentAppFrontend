@@ -6,17 +6,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PaymentListComponent } from './payment-list/payment-list.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
+import { EditPaymentComponent } from './edit-payment/edit-payment.component';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     PaymentListComponent,
-    AddPaymentComponent
+    AddPaymentComponent,
+    EditPaymentComponent,
+
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ReactiveFormsModule
   ],
   exports: [
     PaymentListComponent,
